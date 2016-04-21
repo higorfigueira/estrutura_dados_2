@@ -37,14 +37,14 @@ class Pessoa{
     };
 
     void setId(int id){
-      id=id;
+      this->id=id;
     };
     Pessoa *getDireita (){
       return direita;
     };
 
     void setDireita(Pessoa *direita){
-      direita=direita;
+      this->direita=direita;
     };
 
     Pessoa *getEsquerda (){
@@ -52,7 +52,7 @@ class Pessoa{
     };
 
     void setEsquerda(Pessoa *esquerda){
-      esquerda=esquerda;
+      this->esquerda=esquerda;
     };
 
     Pessoa *getPai (){
@@ -60,20 +60,20 @@ class Pessoa{
     };
 
     void setPai(Pessoa *pai){
-      pai=pai;
+      this->pai=pai;
     };
     //FIM GET e SET
 
 
     int inserir(Pessoa *novo){
-      // if (/* condition */) {
-      //   /* code */
-      // }
+
       if(novo->id >= this->id){
               if(this->direita == NULL){
                 novo->pai = this;
                 this->direita = novo;
+                 cout << "passou1" <<endl;
                 return 1;
+
               }
           else
           this->direita->inserir(novo);
@@ -82,6 +82,7 @@ class Pessoa{
           if(this->esquerda == NULL){
             novo->pai = this;
             this->esquerda = novo;
+            cout << "passou2" <<endl;
             return 1;
           }
           else
@@ -91,8 +92,7 @@ class Pessoa{
     }
 
 
-    //função bucar PESSOA
-
+    //****************função BUSCAR PESSOA**************//
     Pessoa* busca (int idade){
       if(idade == this->id) {
         cout << "encontrado" << endl;
@@ -111,42 +111,122 @@ class Pessoa{
       return NULL;
     };
 
-    void mostra (){
+    //*********Função mostra********//
+    int mostra (){
       cout << this->getId() << endl;
-      if(this->esquerda == NULL && this->esquerda == NULL)
-        return;
+
+      if(this->esquerda == NULL && this->direita == NULL)
+        return 0;
 
       else{
-        if(this->esquerda!=NULL)
-          this->esquerda->mostra();
-        if(this->direita!=NULL)
-          this->direita->mostra();
+      if(this->esquerda != NULL){
+        this->esquerda->mostra();
+      }
+      if(this->direita != NULL){
+        this->direita->mostra();
+      }
       }
     };
 
 
 
-    //função DELETAR PESSOA
+    //**************função DELETAR PESSOA*************//
     bool deletar (int idade){
       Pessoa *apagar = this->busca(idade);
+
       if(apagar->getPai() == NULL && apagar->getDireita() == NULL && apagar->getEsquerda() == NULL){
         delete apagar;
+        cout << "o no foi apagado" << endl;
         return true;
       }
 
-      if (apagar->getDireita() != NULL && apagar->getEsquerda() == NULL && apagar->getPai() != NULL){
+      // cout << apagar->getId() << endl << endl;
+
+      if((apagar->esquerda == NULL) && (apagar->direita == NULL)){
+        if (apagar->pai->direita->getId() == apagar->getId()) {
+          apagar->pai->setDireita(NULL);
+          delete apagar;
+          return true;
+        }else if(apagar->pai->esquerda->getId() == apagar->getId()){
+          apagar->pai->setEsquerda(NULL);
+          delete apagar;
+          return true;
+        }
+      }
+
+      if((apagar->direita != NULL) && (apagar->esquerda == NULL)){
           apagar->pai->setDireita(apagar->getDireita());
           apagar->direita->setPai(apagar->getPai());
           delete apagar;
+          cout << "o no foi apagado" << endl;
           return true;
       }
 
-      if (apagar->getEsquerda() != NULL && apagar->getDireita() == NULL && apagar->getPai() != NULL){
-        apagar->pai->setEsquerda(apagar->getEsquerda());
-        apagar->esquerda->setPai(apagar->getPai());
-        delete apagar;
-        return true;
-      }
+      if((apagar->direita == NULL) && (apagar->esquerda != NULL)){
+          apagar->pai->setEsquerda(apagar->getEsquerda());
+          apagar->esquerda->setPai(apagar->getPai());
+          delete apagar;
+          cout << "o no foi apagado" << endl;
+          return true;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      // if((apagar->getDireita() != NULL) && (apagar->getEsquerda() == NULL) && (apagar->getPai() != NULL)){
+      //
+      //     apagar->getPai()->setDireita(apagar->getDireita());
+      //     apagar->getDireita()->setPai(apagar->getPai());
+      //     delete apagar;
+      //     cout << "o no foi apagado" << endl;
+      //     return true;
+      // }
+      //
+      // if((apagar->getEsquerda() != NULL) && (apagar->getDireita() == NULL) && (apagar->getPai() != NULL){
+      //   apagar->getPai()->setEsquerda(apagar->getEsquerda());
+      //   apagar->getEsquerda()->setPai(apagar->getPai());
+      //   delete apagar;
+      //   cout << "o no foi apagado" << endl;
+      //   return true;
+      // }
+
+      // if(apagar->getDireita() != NULL && apagar->getEsquerda != NULL ){
+      //   Pessoa *aux = apagar;
+      //   Pessoa *aux2 = apagar;
+      //
+      //   int a=0; int b=0;
+      //   a = aux->getEsquerda(getId()) - apagar->getId();
+      //   b = aux2->getDireita(getId()) - apagar->getId();
+      //
+      //   if(a < b){
+      //     aux = apagar->getDireita();
+      //     aux2 = apagar->getDireita();
+      //
+      //     apagar->getPai()->setDireita(aux);
+      //     apagar->getEsquerda()->setPai(aux);
+      //     aux->setDireita(aux2);
+      //     aux->getPai()->setPai(apagar->getPai());
+      //
+      //   }
+      //}
 
     };
 
