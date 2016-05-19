@@ -9,6 +9,7 @@ class Pessoa{
 
   protected:
     int id;
+    //string nome;
     Pessoa *direita, *esquerda, *pai;
 
   public:
@@ -17,11 +18,13 @@ class Pessoa{
 
     Pessoa(){
       id = 0;
+      //nome = "";
       direita = esquerda = NULL;
     };
 
-    Pessoa(int id){
+    Pessoa(int id/*, string nome*/){
       this->id = id;
+      //this->nome = nome;
       direita = NULL;
       esquerda = NULL;
       pai = NULL;
@@ -39,6 +42,15 @@ class Pessoa{
     void setId(int id){
       this->id=id;
     };
+
+    // string getNome (){
+    //   return nome;
+    // };
+    //
+    // void setNome(string nome){
+    //   this->nome=nome;
+    // };
+
     Pessoa *getDireita (){
       return direita;
     };
@@ -71,7 +83,6 @@ class Pessoa{
               if(this->direita == NULL){
                 novo->pai = this;
                 this->direita = novo;
-                 cout << "passou1" <<endl;
                 return 1;
 
               }
@@ -82,7 +93,6 @@ class Pessoa{
           if(this->esquerda == NULL){
             novo->pai = this;
             this->esquerda = novo;
-            cout << "passou2" <<endl;
             return 1;
           }
           else
@@ -114,17 +124,17 @@ class Pessoa{
     //*********Função mostra********//
     int mostra (){
       cout << this->getId() << endl;
+      //cout << this->getNome() << endl;
 
       if(this->esquerda == NULL && this->direita == NULL)
         return 0;
 
       else{
-      if(this->esquerda != NULL){
+      if(this->esquerda != NULL)
         this->esquerda->mostra();
-      }
-      if(this->direita != NULL){
+
+      if(this->direita != NULL)
         this->direita->mostra();
-      }
       }
     };
 
@@ -136,7 +146,6 @@ class Pessoa{
 
       if(apagar->getPai() == NULL && apagar->getDireita() == NULL && apagar->getEsquerda() == NULL){
         delete apagar;
-        cout << "o no foi apagado" << endl;
         return true;
       }
 
@@ -158,7 +167,6 @@ class Pessoa{
           apagar->pai->setDireita(apagar->getDireita());
           apagar->direita->setPai(apagar->getPai());
           delete apagar;
-          cout << "o no foi apagado" << endl;
           return true;
       }
 
@@ -166,101 +174,37 @@ class Pessoa{
           apagar->pai->setEsquerda(apagar->getEsquerda());
           apagar->esquerda->setPai(apagar->getPai());
           delete apagar;
-          cout << "o no foi apagado" << endl;
           return true;
         }
 
+    };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      // if((apagar->getDireita() != NULL) && (apagar->getEsquerda() == NULL) && (apagar->getPai() != NULL)){
-      //
-      //     apagar->getPai()->setDireita(apagar->getDireita());
-      //     apagar->getDireita()->setPai(apagar->getPai());
-      //     delete apagar;
-      //     cout << "o no foi apagado" << endl;
-      //     return true;
-      // }
-      //
-      // if((apagar->getEsquerda() != NULL) && (apagar->getDireita() == NULL) && (apagar->getPai() != NULL){
-      //   apagar->getPai()->setEsquerda(apagar->getEsquerda());
-      //   apagar->getEsquerda()->setPai(apagar->getPai());
-      //   delete apagar;
-      //   cout << "o no foi apagado" << endl;
-      //   return true;
-      // }
-
-      // if(apagar->getDireita() != NULL && apagar->getEsquerda != NULL ){
-      //   Pessoa *aux = apagar;
-      //   Pessoa *aux2 = apagar;
-      //
-      //   int a=0; int b=0;
-      //   a = aux->getEsquerda(getId()) - apagar->getId();
-      //   b = aux2->getDireita(getId()) - apagar->getId();
-      //
-      //   if(a < b){
-      //     aux = apagar->getDireita();
-      //     aux2 = apagar->getDireita();
-      //
-      //     apagar->getPai()->setDireita(aux);
-      //     apagar->getEsquerda()->setPai(aux);
-      //     aux->setDireita(aux2);
-      //     aux->getPai()->setPai(apagar->getPai());
-      //
-      //   }
-      //}
+    int altura(int altesq, int altdir){
+      int a;
+      std::cout << "iniciou" << std::endl;
+      if(this->esquerda == NULL && this->direita == NULL){
+        std::cout << "retornou" << std::endl;
+        return 0;
+      }
+      else{
+        if(this->esquerda != NULL){
+          altesq++;
+          this->esquerda->altura(altesq, altdir);
+        }
+        if(this->direita != NULL){
+          altdir++;
+          this->direita->altura(altesq, altdir);
+        }
+        cout << a << endl;
+        std::cout << "saiu do else" << std::endl;
+    }
+      a = ((altdir > altesq)?altdir:altesq);
+      std::cout << a+1 << std::endl;
+      return a;
 
     };
 
 
 
-
-
-
-
-
-
-    //   if(this->id == idade){
-    //     if (this->pai == NULL && this->direita==NULL && this->esquerda==NULL)
-    //       delete this;
-    //
-    //     if (this->id < idade){
-    //       if(this->direita->id == idade){
-    //         this->direita->direita->pai = this;
-    //         this->direita = this->direita->direita;
-    //         delete this;
-    //       }
-    //       else
-    //         return this->deletar(idade);
-    //     }
-    //     if(this->id > idade){
-    //       if(this->esquerda->id == idade){
-    //         this->esquerda->esquerda->pai = this;
-    //         this->esquerda = this->esquerda->esquerda;
-    //         delete this;
-    //       }
-    //       else
-    //         return this->deletar(idade)
-    //     }
-    //
-    //   }
 
 };
